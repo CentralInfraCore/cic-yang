@@ -21,7 +21,9 @@ spec:
   kind: YANGBlock
   yang_module: ietf-interfaces
   yang_source: RFC 8343
-  extends: ietf-interfaces-base
+  extends:
+    name: ietf-interfaces-base
+    version: v0.0.dev
   interface_types:
     - softwareLoopback    # loopback interfész (RFC 8343)
     - bridge              # Linux bridge / OVS bridge

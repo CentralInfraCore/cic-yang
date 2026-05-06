@@ -21,7 +21,9 @@ spec:
   kind: YANGBlock
   yang_module: ietf-interfaces
   yang_source: RFC 8343
-  extends: ietf-interfaces-base
+  extends:
+    name: ietf-interfaces-base
+    version: v0.0.dev
   interface_types:
     - tunnel              # általános tunnel típus (RFC 8343)
 
@@ -34,13 +36,13 @@ spec:
       origin: cic-extension
 
     - name: local_endpoint
-      type: ipv4-address
+      type: ip-address
       required_on_create: true
-      description: Helyi tunnel végpont IP cím (underlay)
+      description: Helyi tunnel végpont IP cím — IPv4 vagy IPv6 underlay
       origin: cic-extension
 
     - name: remote_endpoint
-      type: ipv4-address
+      type: ip-address
       required_on_create: false
       description: >
         Távoli tunnel végpont IP cím (point-to-point esetén).
@@ -67,6 +69,9 @@ spec:
       type: integer
       range: "1..16777215"
       required_on_create: false
+      required_when:
+        field: tunnel_type
+        equals: vxlan
       capability: vxlan
       description: VXLAN Network Identifier (24-bit)
       origin: cic-extension
@@ -76,6 +81,9 @@ spec:
       range: "1..65535"
       required_on_create: false
       default: 4789
+      applicable_when:
+        field: tunnel_type
+        equals: vxlan
       capability: vxlan
       description: VXLAN UDP destination port (IANA default 4789)
       origin: cic-extension
@@ -84,6 +92,9 @@ spec:
       type: boolean
       required_on_create: false
       default: true
+      applicable_when:
+        field: tunnel_type
+        equals: vxlan
       capability: vxlan
       description: >
         MAC learning engedélyezése a VXLAN tunnelen.
@@ -94,6 +105,9 @@ spec:
       type: boolean
       required_on_create: false
       default: false
+      applicable_when:
+        field: tunnel_type
+        equals: vxlan
       capability: vxlan
       description: ARP/ND proxy engedélyezése a VXLAN bridge-en
       origin: cic-extension
@@ -102,6 +116,9 @@ spec:
     - name: gre_key
       type: integer
       required_on_create: false
+      applicable_when:
+        field: tunnel_type
+        equals: gre
       capability: gre
       description: GRE tunnel key (opcionális azonosítás)
       origin: cic-extension

@@ -26,6 +26,9 @@ spec:
   interface_types:
     - l2vlan              # IEEE 802.1Q VLAN (RFC 8343)
 
+  extends:
+    name: ietf-interfaces-base
+    version: v0.0.dev
   standalone: false       # mindig szülőhöz kötött (physical vagy logical)
 
   config:
@@ -59,6 +62,9 @@ spec:
       type: list
       item_type: vlan-id
       required_on_create: false
+      applicable_when:
+        field: vlan_mode
+        in: [trunk, hybrid]
       description: >
         Engedélyezett VLAN ID-k trunk/hybrid módban.
         Üres = minden VLAN engedélyezett (trunk default).
@@ -68,6 +74,9 @@ spec:
       type: vlan-id
       required_on_create: false
       default: 1
+      applicable_when:
+        field: vlan_mode
+        equals: trunk
       description: "Native/untagged VLAN trunk porton (default: 1)"
       origin: cic-extension
 
