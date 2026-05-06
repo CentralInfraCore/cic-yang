@@ -1,0 +1,106 @@
+---
+metadata:
+  name: ietf-interfaces-tunnel
+  source: RFC 8343 — A YANG Data Model for Interface Management
+  version: v0.0.dev
+  description: >
+    Tunnel interfész building block — VXLAN, GRE, IPIP encapsulation.
+    Logikai interfész típusa, nincs fizikai szülő szükséges (underlay IP-n fut).
+  owner: Gabor Zoltan Sinko
+  tags:
+    - yang-block
+    - ietf
+    - rfc8343
+    - tunnel
+  validatedBy:
+    name: cic-primitives
+    version: v0.1.2
+
+spec:
+  kind: YANGBlock
+  yang_module: ietf-interfaces
+  yang_source: RFC 8343
+  interface_types:
+    - tunnel    # általános tunnel típus
+
+  config:
+    - name: name
+      type: string
+      mandatory: true
+      role: key
+      description: Tunnel interfész neve (pl. vxlan0, gre1, tun0)
+
+    - name: tunnel_type
+      type: enum
+      values: [vxlan, gre, ipip, geneve, other]
+      mandatory: true
+      description: Encapsulation protokoll
+
+    - name: enabled
+      type: boolean
+      default: true
+      mandatory: true
+
+    - name: mtu
+      type: integer
+      range: "68..9216"
+      mandatory: false
+      description: >
+        Tunnel MTU. VXLAN esetén tipikusan 1450 (1500 - 50 byte overhead).
+
+    # VXLAN-specifikus (tunnel_type: vxlan esetén)
+    - name: vni
+      type: integer
+      range: "1..16777215"
+      mandatory: false
+      capability: vxlan
+      description: VXLAN Network Identifier (24-bit)
+
+    - name: local_endpoint
+      type: string
+      mandatory: false
+      description: Helyi tunnel végpont IP cím (underlay)
+
+    - name: remote_endpoint
+      type: string
+      mandatory: false
+      description: >
+        Távoli tunnel végpont IP cím (point-to-point esetén).
+        Multicast cím VXLAN flood-and-learn esetén (pl. 239.1.1.1).
+        Üres = head-end replication vagy BGP EVPN vezérelt.
+
+    - name: underlay_interface
+      type: string
+      mandatory: false
+      description: Underlay fizikai/logikai interfész neve amin a tunnel fut
+
+    # GRE-specifikus
+    - name: gre_key
+      type: integer
+      mandatory: false
+      capability: gre
+      description: GRE tunnel key (opcionális azonosítás)
+
+    - name: ttl
+      type: integer
+      range: "1..255"
+      mandatory: false
+      default: 64
+      description: Outer IP TTL értéke
+
+  state:
+    - name: oper_status
+      type: enum
+      values: [up, down, unknown]
+      mandatory: true
+
+    - name: statistics
+      type: object
+      mandatory: false
+      properties:
+        in_pkts: integer
+        in_octets: integer
+        in_errors: integer
+        out_pkts: integer
+        out_octets: integer
+        out_errors: integer

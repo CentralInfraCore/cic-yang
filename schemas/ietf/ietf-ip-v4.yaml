@@ -1,0 +1,124 @@
+---
+metadata:
+  name: ietf-ip-v4
+  source: RFC 8344 — A YANG Data Model for IP Management
+  version: v0.0.dev
+  description: >
+    IPv4 konfiguráció building block — RFC 8344 ietf-ip augmentáció CIC adaptációja,
+    netplan-kompatibilis struktúrával. Mindig egy interfészhez kötött, sosem standalone.
+  owner: Gabor Zoltan Sinko
+  tags:
+    - yang-block
+    - ietf
+    - rfc8344
+    - ipv4
+  validatedBy:
+    name: cic-primitives
+    version: v0.1.2
+
+spec:
+  kind: YANGBlock
+  yang_module: ietf-ip
+  yang_source: RFC 8344
+  ip_version: ipv4
+
+  standalone: false     # mindig interfészhez kötött
+
+  config:
+    - name: addresses
+      type: list
+      mandatory: false
+      description: Statikus IPv4 cím(ek) CIDR formátumban (pl. 10.0.0.1/24)
+      item_fields:
+        - name: address
+          type: string
+          role: key
+          description: IPv4 cím prefix-hosszal (CIDR)
+        - name: label
+          type: string
+          mandatory: false
+          description: Cím label (pl. primary, secondary)
+
+    - name: gateway4
+      type: string
+      mandatory: false
+      description: Default IPv4 gateway cím
+
+    - name: nameservers
+      type: object
+      mandatory: false
+      description: DNS konfiguráció
+      properties:
+        addresses:
+          type: list
+          item_type: string
+          description: DNS szerver IP cím(ek) (prioritás sorrendben)
+        search:
+          type: list
+          item_type: string
+          description: DNS keresési domain lista
+
+    - name: routes
+      type: list
+      mandatory: false
+      description: Statikus route-ok
+      item_fields:
+        - name: to
+          type: string
+          role: key
+          description: Célhálózat CIDR formátumban (pl. 192.168.0.0/16) vagy "default"
+        - name: via
+          type: string
+          mandatory: false
+          description: Next-hop gateway IP cím
+        - name: metric
+          type: integer
+          mandatory: false
+          default: 100
+          description: Route metrika (kisebb = előnyben részesített)
+        - name: table
+          type: integer
+          mandatory: false
+          description: "Routing tábla azonosító (default: main)"
+
+    - name: metric
+      type: integer
+      mandatory: false
+      description: Interfész alapértelmezett metrikája (DHCP-kiosztott route-okra is)
+
+    - name: dhcp4_overrides
+      type: object
+      mandatory: false
+      description: DHCP kliens viselkedés finomhangolása (ha dhcp_service van a VLAN-on)
+      properties:
+        use_dns:
+          type: boolean
+          default: true
+        use_routes:
+          type: boolean
+          default: true
+        use_gateway:
+          type: boolean
+          default: true
+        hostname:
+          type: string
+          mandatory: false
+
+  state:
+    - name: assigned_addresses
+      type: list
+      mandatory: false
+      description: Ténylegesen kiosztott IPv4 cím(ek) — statikus és DHCP-s egyaránt
+      item_fields:
+        - name: address
+          type: string
+          role: key
+          description: IPv4 cím CIDR formátumban
+        - name: origin
+          type: enum
+          values: [static, dhcp, link_local, other]
+          description: Cím forrása
+        - name: lease_expiry
+          type: string
+          mandatory: false
+          description: DHCP bérleti idő lejárta (ISO 8601, csak origin=dhcp esetén)

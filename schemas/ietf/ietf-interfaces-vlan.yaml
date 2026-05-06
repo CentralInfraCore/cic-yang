@@ -1,0 +1,84 @@
+---
+metadata:
+  name: ietf-interfaces-vlan
+  source: RFC 8343 — A YANG Data Model for Interface Management
+  version: v0.0.dev
+  description: >
+    VLAN szegmens building block — L2 VLAN tagging, access/trunk/hybrid mód.
+    Mindig fizikai VAGY logikai interfészhez kötött, soha nem standalone.
+    A dhcp_service referencia egy külső DHCP service-re mutat (service réteg).
+  owner: Gabor Zoltan Sinko
+  tags:
+    - yang-block
+    - ietf
+    - rfc8343
+    - vlan
+  validatedBy:
+    name: cic-primitives
+    version: v0.1.2
+
+spec:
+  kind: YANGBlock
+  yang_module: ietf-interfaces
+  yang_source: RFC 8343
+  interface_types:
+    - l2vlan    # IEEE 802.1Q VLAN
+
+  standalone: false     # mindig szülőhöz kötött
+
+  config:
+    - name: vlan_id
+      type: integer
+      range: "1..4094"
+      mandatory: true
+      role: key
+      description: VLAN azonosító (IEEE 802.1Q)
+
+    - name: name
+      type: string
+      mandatory: false
+      description: VLAN neve / leírása
+
+    - name: vlan_mode
+      type: enum
+      values: [access, trunk, hybrid]
+      mandatory: true
+      default: access
+      description: >
+        Port VLAN működési mód.
+        access: egy VLAN, untagged forgalom
+        trunk: több VLAN, tagged forgalom (allowed_vlans lista alapján)
+        hybrid: vegyes, egyes VLAN-ok tagged, mások untagged
+
+    - name: allowed_vlans
+      type: list
+      item_type: integer
+      mandatory: false
+      description: >
+        Engedélyezett VLAN ID-k trunk/hybrid módban.
+        Üres = minden VLAN engedélyezett (trunk default).
+
+    - name: native_vlan
+      type: integer
+      range: "1..4094"
+      mandatory: false
+      description: "Native/untagged VLAN trunk porton (default: 1)"
+
+    - name: dhcp_service
+      type: ref
+      mandatory: false
+      description: >
+        Referencia egy DHCP service resource-ra amely erre a VLAN-ra oszt címeket.
+        Service réteg — a DHCP service máshol van definiálva, ez csak pointer.
+        Formátum: CIC address string (pl. "dhcp/server-01/pool-mgmt")
+
+  state:
+    - name: oper_status
+      type: enum
+      values: [up, down, unknown]
+      mandatory: true
+
+    - name: mac_table_entries
+      type: integer
+      mandatory: false
+      description: Aktuális MAC tábla bejegyzések száma ezen a VLAN-on
