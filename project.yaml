@@ -24,11 +24,11 @@ x-cic:
   repo_type: yang-layer
   base_primitive: cic-primitives@v0.1.2
 release:
-  version: 0.1.0
-  timestamp: '2026-05-06T19:33:17.934377+00:00'
-  repository_tree_hash: DFwxQj4fUPT5IHHPb4dSNIeel/DBg07PxwNTS4gnlAk=
-  build_hash: XGPHIqYHhE9vbHj0tQBA8+3wJeE0GE2ZV6eriMLagEU=
-  sign: vault:v1:MEUCIDbCm4uYt4j3HEazegTeovfP9b092ranBN7C5BOF3mklAiEArp4Ly/7Vve6xXahWfNwszWc8xpdxiWjbxBQOiprY0Uc=
+  version: 0.1.1
+  timestamp: '2026-05-07T13:47:29.013571+00:00'
+  repository_tree_hash: Li/gzWvxboXrGy/zAWt6yy5PDjt2gs0oZxJqYCA4LmM=
+  build_hash: mnWnRmGrY0R1LW1mwl6JBrZiiE1mSW5wnBHuWM2nBA0=
+  sign: vault:v1:MEQCIC0/wmRbmHXl16I46qjfsFX4GtkrIn4xcvxABaBq+clAAiBxMN3rd3R82rlZPyLjH70//WvCp9hWGdjxSmFe4sauzQ==
   cert: '-----BEGIN CERTIFICATE-----
 
     MIICBjCCAaygAwIBAgIUSnRMR6RPnEbg296XWPOqq/u5PCwwCgYIKoZIzj0EAwIw
