@@ -23,5 +23,10 @@ compiler_settings:
 x-cic:
   repo_type: yang-layer
   base_primitive: cic-primitives@v0.1.2
+  known_limitations:
+    - id: build_hash_equals_source_hash
+      description: >
+        build_hash == source_hash — no separate build step yet.
+        Will diverge when pyang compile or code generation is introduced.
 release:
   version: 0.0.dev
