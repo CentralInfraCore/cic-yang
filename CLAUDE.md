@@ -39,12 +39,14 @@ Kötelező szabályok: `ai/MAINTENANCE_CONTRACT.md`
 
 | Building block | Forrás | Státusz |
 |---|---|---|
+| `ietf-interfaces-base.yaml` | RFC 8343 | **draft** |
 | `ietf-interfaces-physical.yaml` | RFC 8343 | **draft** |
 | `ietf-interfaces-logical.yaml` | RFC 8343 | **draft** |
 | `ietf-interfaces-vlan.yaml` | RFC 8343 | **draft** |
 | `ietf-interfaces-tunnel.yaml` | RFC 8343 | **draft** |
 | `ietf-ip-v4.yaml` | RFC 8344 | **draft** |
 | `ietf-ip-v6.yaml` | RFC 8344 | **draft** |
+| `ietf-lldp.yaml` | RFC 8516 | **draft** |
 
 ---
 
@@ -60,7 +62,7 @@ Kötelező szabályok: `ai/MAINTENANCE_CONTRACT.md`
 
 ```
 base-repo
-    └──► cic-primitives (primitives/@v0.1.2)
+    └──► cic-primitives (primitives/@v0.1.3)
               └──► cic-yang (ez a repo)
                         └──► domain repók (cic-network v2, stb.)
                                   └──► adapter sémák
