@@ -42,6 +42,30 @@ de az adott eszköz implementáció nem kezeli. Ez ritka kivétel, nem alapeset.
 
 ---
 
+## D-005 — ietf-lldp main branch gap (2026-05-08)
+
+**Döntés szükséges** (nyitott, BACKLOG B-003)
+
+**Helyzet:**
+Az `ietf-lldp.yaml` building block (`55b118c`) a `yang/releases/v0.1.0` → `yang/releases/v0.1.1`
+útvonalon keletkezett — közvetlenül a releases branch-en, nem `yang/main`-en.
+A `yang/main` HEAD-je (`b20ce04`) az ietf-lldp commit elődje a lineáris historyn.
+Következmény: `yang/main` nem tartalmazza az ietf-lldp fájlt, hiába van benne a v0.1.1 release-ben.
+
+**Hatás:**
+- `cic-network` séma és `switch-netconf-adapter` erre épít
+- Ha cic-yang v0.1.2 fejlesztése `yang/main`-ről indul, ietf-lldp hiányozni fog
+- A `cic-yang-block.schema.yaml` (B-004) és az ietf-lldp együtt kell a következő release-hez
+
+**Opciók:**
+1. **Cherry-pick** → `git cherry-pick 55b118c` az ietf-lldp commitot yang/main-re hozza (gyors)
+2. **Újraírás** → ietf-lldp v2 yang/main-en a következő release részeként (tisztább, de több munka)
+3. **Elfogadás** → az lldp mindig releases branch-en él, dokumentáltan (legkevesebb munka, de törékeny)
+
+**Ajánlott:** cherry-pick (1) — az ietf-lldp implementáció kész és stabil, nincs ok újraírásra.
+
+---
+
 ## D-004 — YANG scope v1 (2026-05-06)
 
 **Döntés:** v1 scope: RFC 8343 (ietf-interfaces) + RFC 8344 (ietf-ip).
