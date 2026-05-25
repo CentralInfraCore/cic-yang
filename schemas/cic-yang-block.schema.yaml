@@ -71,7 +71,7 @@ spec:
 
           origin:
             type: string
-            enum: [rfc8343, rfc8344, openconfig, cic-extension]
+            enum: [rfc8343, rfc8344, rfc8516, openconfig, cic-extension]
             description: Mező eredete — RFC-ből jön vagy CIC normalizáció
 
           capability:
@@ -230,7 +230,7 @@ spec:
                   type: string
                 origin:
                   type: string
-                  enum: [rfc8343, rfc8344, openconfig, cic-extension]
+                  enum: [rfc8343, rfc8344, rfc8516, openconfig, cic-extension]
                 payload:
                   type: array
                   items:
