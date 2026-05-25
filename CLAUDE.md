@@ -1,18 +1,16 @@
 # cic-yang — Claude kontextus
 
-## Mi ez a rendszer
+## Nyelvi szabály — KÖTELEZŐ / Language policy — MANDATORY
 
-A `cic-yang` a CentralInfraCore **YANG building block rétege** — IETF és OpenConfig
-YANG modellek CIC primitív rendszerbe illesztett, újrafelhasználható schema fragmentei.
-
-Nem domain modell. Nem adapter implementáció. Nem nyers YANG másolat.
-
-A building block: egy YANG modul egy jól körülhatárolt részének CIC-szintű,
-validálható, verziózott reprezentációja — amelyből adapter sémák kompozícióval épülnek.
-
-Részletes architektúra: `ai/SYSTEM_CONTEXT.md`
-Tervezési döntések: `ai/DECISIONS.md`
-Kötelező szabályok: `ai/MAINTENANCE_CONTRACT.md`
+| Terület / Scope | Szabály / Rule |
+|---|---|
+| Kommunikáció (AI ↔ fejlesztő) | Magyar / Hungarian |
+| Commit üzenetek / Commit messages | **Angol / English** |
+| Kód kommentek, docstringek / Code comments, docstrings | **Angol / English** |
+| Schema YAML `description` mezők / fields | **Angol / English** |
+| Dokumentáció (README, ai/*.md) / Documentation | **Kétnyelvű HU+EN / Bilingual HU+EN** |
+| docs/hu/ | Magyar forrás / Hungarian source |
+| docs/en/ | Angol fordítás / English translation |
 
 ---
 
@@ -26,6 +24,22 @@ Kötelező szabályok: `ai/MAINTENANCE_CONTRACT.md`
 
 Ha nem `yang/devel`-en vagyunk: figyelmeztetés, és átváltás `yang/devel`-re mielőtt bármilyen
 schema, kód vagy dokumentáció változtatás történik.
+
+---
+
+## Mi ez a rendszer
+
+A `cic-yang` a CentralInfraCore **YANG building block rétege** — IETF és OpenConfig
+YANG modellek CIC primitív rendszerbe illesztett, újrafelhasználható schema fragmentei.
+
+Nem domain modell. Nem adapter implementáció. Nem nyers YANG másolat.
+
+A building block: egy YANG modul egy jól körülhatárolt részének CIC-szintű,
+validálható, verziózott reprezentációja — amelyből adapter sémák kompozícióval épülnek.
+
+Részletes architektúra: `ai/SYSTEM_CONTEXT.md`
+Tervezési döntések: `ai/DECISIONS.md`
+Kötelező szabályok: `ai/MAINTENANCE_CONTRACT.md`
 
 ---
 

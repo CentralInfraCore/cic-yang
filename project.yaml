@@ -20,13 +20,11 @@ compiler_settings:
   meta_schema_file: md.meta.schema.yaml
   primitive_schema_file: schemas/index.yaml
   vault_key_name: cic-my-sign-key
+  vault_cert_path: "cic-my-sign-key/crt/bar"
+  owner_email: sinkog@centralinfracore.hu
+  validity_days: 365
 x-cic:
   repo_type: yang-layer
-  base_primitive: cic-primitives@v0.1.2
-  known_limitations:
-    - id: build_hash_equals_source_hash
-      description: >
-        build_hash == source_hash — no separate build step yet.
-        Will diverge when pyang compile or code generation is introduced.
+  base_primitive: cic-primitives@v0.1.5
 release:
   version: 0.0.dev
