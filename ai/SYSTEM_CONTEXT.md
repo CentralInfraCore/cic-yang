@@ -9,13 +9,32 @@ Olvasd el mielőtt bármit módosítasz.
 A `cic-yang` a CentralInfraCore YANG building block rétege — az a szint, amelyből
 adapter sémák kompozícióval épülnek. Nem domain modell, nem adapter implementáció.
 
-**Helye a kompozíciós láncban:**
+**Rétegdiagram — hol van a cic-yang a láncban:**
+
 ```
-cic-primitives  ← irreducibilis szemantikai atomok (Shape, Role, Access, stb.)
-cic-yang        ← YANG modellek CIC-be illesztve (RFC 8343, 8344, OpenConfig)
-cic-network v2  ← domain séma, cic-yang building blockok felhasználásával
-adapter sémák   ← cic-yang blokkok kompozíciója = implicit conformance
+base-repo               ← tooling sablon (Makefile, CI, compiler)
+    └──► cic-primitives ← irreducibilis szemantikai atomok + aggregátumok
+              │           (Shape, Role, Behavior, Contract, Address,
+              │            Identity, Event, Access — 8 atom)
+              │           kind: AtomicPrimitive | AggregatePrimitive
+              │
+              └──► cic-yang  ← YANG adaptation layer
+                        │      NEM DomainComposition — ez közbenső szint
+                        │      kind: YANGBlock (saját, primitives enum-on kívül)
+                        │      RFC 8343 / RFC 8344 / RFC 8516 building blockok
+                        │
+                        └──► cic-network v2  ← DomainComposition fogyasztó
+                                  │             cic-yang blokkokat kompozícióz
+                                  │             domain séma (NetworkInterface)
+                                  │
+                                  └──► adapter sémák  ← konkrét implementáció
+                                        (pl. switch-netconf-adapter)
+                                        building block kompozíció = implicit conformance
 ```
+
+**Kulcsdisztinkció:** A cic-yang `kind: YANGBlock` — ez szándékosan nem szerepel
+a primitives `index.yaml` enum-jában (`AtomicPrimitive|AggregatePrimitive|DomainComposition`).
+A cic-yang adaptation layer, nem domain szint. Domain szint a cic-network és társai.
 
 ---
 
@@ -29,20 +48,22 @@ interpretálja az RFC-eket, minden domain repóban divergálnak. A cic-yang:
 
 ---
 
-## YANG scope — v1
+## YANG scope — v1 (8 building block, v0.1.2)
 
-| Modul | Forrás | Lefed |
-|---|---|---|
-| `ietf-interfaces-physical` | RFC 8343 | Fizikai interfész (ethernetCsmacd, LAG) |
-| `ietf-interfaces-logical` | RFC 8343 | Logikai interfész (loopback, bridge, bond) |
-| `ietf-interfaces-vlan` | RFC 8343 | VLAN szegmens (l2vlan, access/trunk/hybrid) |
-| `ietf-interfaces-tunnel` | RFC 8343 | Tunnel (VXLAN, GRE, IPIP) |
-| `ietf-ip-v4` | RFC 8344 | IPv4 konfiguráció (netplan-derivált) |
-| `ietf-ip-v6` | RFC 8344 | IPv6 konfiguráció (netplan-derivált) |
+| Modul | Forrás | Lefed | Státusz |
+|---|---|---|---|
+| `ietf-interfaces-base` | RFC 8343 | Közös interfész alap (type, enabled, l2-mtu) | **draft** |
+| `ietf-interfaces-physical` | RFC 8343 | Fizikai interfész (ethernetCsmacd, LAG) | **draft** |
+| `ietf-interfaces-logical` | RFC 8343 | Logikai interfész (loopback, bridge, bond) | **draft** |
+| `ietf-interfaces-vlan` | RFC 8343 | VLAN szegmens (l2vlan, access/trunk/hybrid) | **draft** |
+| `ietf-interfaces-tunnel` | RFC 8343 | Tunnel (VXLAN, GRE, IPIP) | **draft** |
+| `ietf-ip-v4` | RFC 8344 | IPv4 konfiguráció (netplan-derivált) | **draft** |
+| `ietf-ip-v6` | RFC 8344 | IPv6 konfiguráció (netplan-derivált) | **draft** |
+| `ietf-lldp` | RFC 8516 | LLDP discovery (cherry-pick: D-005) | **draft** |
 
-**Kizárva (service réteg):**
-- RFC 8349 (routing protokollok) → service
-- RFC 8519 (ACL) → service
+**Kizárva (service réteg — TILOS building block szintű felvétel):**
+- RFC 8349 (routing protokollok) → service réteg
+- RFC 8519 (ACL) → service réteg
 
 ---
 
@@ -92,14 +113,16 @@ spec:
 
 ---
 
-## Jelenlegi állapot (2026-05-06)
+## Jelenlegi állapot (2026-05-25)
 
-| Elem | Státusz |
-|---|---|
-| git bootstrap + primitives/@v0.1.2 merge | **defined** |
-| project.yaml + dependency.yaml | **defined** |
-| YANGBlock kind az index.yaml-ban | **defined** |
-| 6 building block skeleton | **draft** |
-| Building block tartalom (mezők) | **pending** |
-| `make validate` zöld | **pending** |
-| Első signed release | **concept** |
+| Elem | Státusz | Megjegyzés |
+|---|---|---|
+| git bootstrap + primitives/@v0.1.5 merge | **defined** | yang/devel branch bevezetve |
+| project.yaml + dependency.yaml | **defined** | primitives/@v0.1.5 base |
+| YANGBlock kind az index.yaml-ban | **defined** | D-001 — saját kind, nem primitives enum |
+| 8 building block skeleton | **defined** | ietf-interfaces-base + ietf-lldp hozzáadva |
+| Building block tartalom (mezők) | **draft** | fields stub-ok, tartalmi kitöltés még szükséges |
+| `make validate` zöld | **defined** | Docker-alapú tooling |
+| Developer pledge (commitment.yaml) | **defined** | createdBy + validity + Vault sign |
+| Első signed release — yang/@v0.1.2 | **defined** | ECDSA + cic_countersign (CICSourceCA) |
+| yang/devel branch | **defined** | branch rule: CLAUDE.md-ben rögzítve |
