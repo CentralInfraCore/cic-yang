@@ -26,5 +26,3 @@ compiler_settings:
 x-cic:
   repo_type: yang-layer
   base_primitive: cic-primitives@v0.1.5
-release:
-  version: 0.0.dev
