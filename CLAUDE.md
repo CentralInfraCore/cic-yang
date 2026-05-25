@@ -1,5 +1,32 @@
 # cic-yang — Claude kontextus
 
+## Nyelvi szabály — KÖTELEZŐ / Language policy — MANDATORY
+
+| Terület / Scope | Szabály / Rule |
+|---|---|
+| Kommunikáció (AI ↔ fejlesztő) | Magyar / Hungarian |
+| Commit üzenetek / Commit messages | **Angol / English** |
+| Kód kommentek, docstringek / Code comments, docstrings | **Angol / English** |
+| Schema YAML `description` mezők / fields | **Angol / English** |
+| Dokumentáció (README, ai/*.md) / Documentation | **Kétnyelvű HU+EN / Bilingual HU+EN** |
+| docs/hu/ | Magyar forrás / Hungarian source |
+| docs/en/ | Angol fordítás / English translation |
+
+---
+
+## Branch szabály — KÖTELEZŐ
+
+**Érdemi fejlesztés kizárólag a `yang/devel` ágon történhet.**
+
+- `yang/main` — csak merge fogad (yang/devel → yang/main), közvetlen commit tilos
+- `yang/releases/v*` — kizárólag release tag célra
+- `yang/devel` — ez az aktív fejlesztési ág
+
+Ha nem `yang/devel`-en vagyunk: figyelmeztetés, és átváltás `yang/devel`-re mielőtt bármilyen
+schema, kód vagy dokumentáció változtatás történik.
+
+---
+
 ## Mi ez a rendszer
 
 A `cic-yang` a CentralInfraCore **YANG building block rétege** — IETF és OpenConfig
@@ -62,7 +89,7 @@ Kötelező szabályok: `ai/MAINTENANCE_CONTRACT.md`
 
 ```
 base-repo
-    └──► cic-primitives (primitives/@v0.1.3)
+    └──► cic-primitives (primitives/@v0.1.5)
               └──► cic-yang (ez a repo)
                         └──► domain repók (cic-network v2, stb.)
                                   └──► adapter sémák
