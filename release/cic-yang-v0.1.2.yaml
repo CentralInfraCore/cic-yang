@@ -2545,5 +2545,5 @@ cic_countersign:
       5VCsO/gu0a96erNCe12OHdB94FxgSEKqa/Aki6ACIQDYxpQS2/GouDtFRrkwiDZs
       8+JWdgI19hcLtTp7gF0WJA==
       -----END CERTIFICATE-----
-  signed_payload: WM/NBoCoYzY7unNLdhjMKupwQCL3CTl4hD8NF433cr0=
+  signed_payload: build_hash
   sign: vault:v1:MEUCIGbbTotUdsfmI1uKGvrqTvmF/BPiTMtYJ5+l7W8NNYYYAiEAvSuk+1bPDZP9OfVUtJwZQRHocHI4AtbF/XiMuxBpT4U=
