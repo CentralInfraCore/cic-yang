@@ -16,6 +16,19 @@ Kötelező szabályok: `ai/MAINTENANCE_CONTRACT.md`
 
 ---
 
+## Branch szabály — KÖTELEZŐ
+
+**Érdemi fejlesztés kizárólag a `yang/devel` ágon történhet.**
+
+- `yang/main` — csak merge fogad (yang/devel → yang/main), közvetlen commit tilos
+- `yang/releases/v*` — kizárólag release tag célra
+- `yang/devel` — ez az aktív fejlesztési ág
+
+Ha nem `yang/devel`-en vagyunk: figyelmeztetés, és átváltás `yang/devel`-re mielőtt bármilyen
+schema, kód vagy dokumentáció változtatás történik.
+
+---
+
 ## Boot sequence — minden session elején
 
 1. `mcp__cic-graph__kb_status` — KB elérhető és friss?
@@ -62,7 +75,7 @@ Kötelező szabályok: `ai/MAINTENANCE_CONTRACT.md`
 
 ```
 base-repo
-    └──► cic-primitives (primitives/@v0.1.3)
+    └──► cic-primitives (primitives/@v0.1.5)
               └──► cic-yang (ez a repo)
                         └──► domain repók (cic-network v2, stb.)
                                   └──► adapter sémák
