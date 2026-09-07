@@ -1,6 +1,6 @@
 # AI Maintenance Contract
 
-A `cic-primitives` repo AI üzemeltetési kézikönyve.
+A `cic-yang` repo AI üzemeltetési kézikönyve.
 
 ---
 

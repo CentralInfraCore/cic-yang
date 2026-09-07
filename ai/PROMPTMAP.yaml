@@ -1,5 +1,12 @@
 version: 1
-context: cic-primitives
+context: cic-yang
+
+# MEGJEGYZÉS: az alábbi entries teljes egészében a `cic-primitives` saját,
+# öröklött (scaffold-másolással idekerült) bootstrap-története — mind
+# "done", és mind a primitíva-réteg (atomic/aggregate schemas) LÉTREHOZÁSÁRÓL
+# szól, amit ez a repo sosem hajtott végre, csak örökölt. Ez a repo
+# (cic-yang) egyelőre nem hajtott végre semmilyen saját, yang-specifikus
+# task-ot — nincs domain composition, csak az örökölt sablon.
 
 # Státuszok: pending | in_progress | done | blocked
 
